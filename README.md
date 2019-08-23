@@ -30,6 +30,6 @@ Download the du-split of SQuAD
 In batch
 
 ```
-	python sampling_batch.py --config_path config/config-sampling.yaml --model_path [MODEL_PATH]
+    python sampling_batch.py --config_path config/config-sampling.yaml --model_path [MODEL_PATH]
 ```
 
