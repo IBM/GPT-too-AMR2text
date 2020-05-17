@@ -1,0 +1,47 @@
+# training
+batch_size: 1
+max_norm: 1
+n_epochs: 1
+seed: 42
+learning: ['sl']  # sl - suvervised learning
+
+learning_rate: 6.25e-5
+warmup_steps: 1
+adam_epsilon: 1.0e-8
+weight_decay: 0.01
+gamma: 1
+gradient_accumulation_steps: 8
+max_input_length: 403
+max_num_examples: 80000 # 75K is the corpus size
+
+# Decoding
+decoder: 'beam' # Sampling, deam, greedy
+top_k: 3
+top_p: 0.9 # nucleus sampling #top_p: 0.9 # nucleus sampling
+temperature: 0.5 
+max_length: 200
+output_size: 15
+beam_size: 15 
+beam_candidates: 10
+split_sent: False
+output_data: 'Test' #Test/Dev
+
+# misc
+fp16: '' # Set to O0, O1, O2 or O3 for fp16 training
+logging: 100
+re_tokenize: False
+traintype: 'train'
+rewardtype: ['ce']
+device: 'cuda'
+checkpoint: './checkpoint'
+    
+# dataset
+dataset_type: ['amr'] # ['natural_questions', 'squad', 'drop', 'cardie']
+input_format: 'original' #Optional for amr
+dataset_path: 'DATA/'
+dataset_cache: 'DATA/cache/amr'
+small: False
+use_silver_data: False
+exclude_large: True
+with_masking: False
+new_enc: False
