@@ -1,7 +1,7 @@
 # training
-batch_size: 5
+batch_size: 1
 max_norm: 3
-n_epochs: 10 
+n_epochs: 10
 seed: 42
 learning: ['sl']  # sl - suvervised learning [rl] for reinforcement learning
 
@@ -11,11 +11,12 @@ warmup_steps: 1
 adam_epsilon: 1.0e-8
 weight_decay: 0.01
 gamma: 1
-gradient_accumulation_steps: 1
+gradient_accumulation_steps: 5
 max_input_length: 403
 max_num_examples: 80000 # 75K is the corpus size
 
 # sampling
+decoding: 'greedy'
 top_k: 0
 top_p: 0.9 # nucleus sampling
 temperature: 1
@@ -29,16 +30,11 @@ traintype: 'train'
 rewardtype: ['ce']
 device: 'cuda'
 checkpoint: './checkpoint'
-split_sent: False
 
 # dataset
 dataset_type: ['amr'] # ['natural_questions', 'squad', 'drop', 'cardie']
 input_format: 'original' #Optional for amr
-dataset_path: 'DATA/'
-dataset_cache: 'DATA/cache/amr'
-small: False #Only for debug. Train with 50 examples
-
-# AMR Specific
+small: False
 use_silver_data: False
 exclude_large: True
-with_masking: False
+with_masking: True

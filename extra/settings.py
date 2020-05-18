@@ -1,4 +1,6 @@
-#Special symbols
+import torch
+
+# Special symbols
 PAD = "<PAD>" # padding
 EOS = "<EOS>" # end of sequence
 BOS = "<BOS>" # start of sequence
@@ -9,3 +11,4 @@ BOS_IDX = 1
 EOS_IDX = 2
 OOV_IDX = 3
 
+CUDA = torch.cuda.is_available()

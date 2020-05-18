@@ -1,0 +1,23 @@
+# environment (DO NOT commit, may contain system variables)
+set_environment.sh
+
+# Python
+__pycache__/
+venv*
+cenv_*
+
+# Data
+DATA/
+
+# dependenct modules and tools
+transformers/
+stog
+meteor*
+top-k-top-p.py
+
+# logs
+*.stderr
+*.stdout
+
+# editors
+*.swp

@@ -1,7 +1,7 @@
 # training
 batch_size: 1
 max_norm: 3
-n_epochs: 5
+n_epochs: 10
 seed: 42
 learning: ['sl']  # sl - suvervised learning [rl] for reinforcement learning
 
@@ -11,16 +11,16 @@ warmup_steps: 1
 adam_epsilon: 1.0e-8
 weight_decay: 0.01
 gamma: 1
-gradient_accumulation_steps: 6
-max_input_length: 223
+gradient_accumulation_steps: 8
+max_input_length: 403
 max_num_examples: 80000 # 75K is the corpus size
 
 # sampling
-decoding: 'greedy'
+decoder: 'greedy'
 top_k: 0
 top_p: 0.9 # nucleus sampling
 temperature: 1
-max_length: 110
+max_length: 200
 
 # misc
 fp16: '' # Set to O0, O1, O2 or O3 for fp16 training
@@ -34,8 +34,6 @@ checkpoint: './checkpoint'
 # dataset
 dataset_type: ['amr'] # ['natural_questions', 'squad', 'drop', 'cardie']
 input_format: 'original' #Optional for amr
-dataset_path: 'DATA/'
-dataset_cache: 'DATA/cache/amr'
 small: False
 use_silver_data: False
 exclude_large: True

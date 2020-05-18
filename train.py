@@ -1,6 +1,5 @@
 import os
-import random   
-import datetime
+import random
 from argparse import ArgumentParser
 import pprint
 
@@ -18,7 +17,7 @@ from pytorch_transformers import GPT2LMHeadModel, GPT2Tokenizer, CONFIG_NAME
 from pytorch_transformers import AdamW
 from models import GPT2ConditionalLMHeadModel
 
-from utils import dotdict, maybe_mkdir, apply_loss
+from utils import dotdict, apply_loss
 from utils import get_data_loaders
 from utils import trim_batch
 from constants import SPECIAL_TOKENS, AMR_SPECIAL_TOKENS
@@ -139,6 +138,20 @@ def main(args):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
+    # obligatory arguments
+    parser.add_argument(
+        "--dataset_path",
+        help="Input data folder",
+        required=True)
+    parser.add_argument(
+        "--dataset_cache",
+        help="Cache for input data folder",
+        required=True)
+    parser.add_argument(
+        "--checkpoint",
+        help="Where model will be stored",
+        required=True)
+    # rest
     parser.add_argument(
         "-c",
         "--config_path",
@@ -166,24 +179,28 @@ if __name__ == "__main__":
         help='The name of experiment')
     args = parser.parse_args()
 
-    # Read config from yaml file.
+    # Read config from yaml file
     config_file = args.config_path
     with open(config_file) as reader:
         config = yaml.safe_load(reader)
         config = dotdict(config)
 
+    # overload with command line arguments
     for k, v in vars(args).items():
         config[k] = v
 
     assert len(config.learning) != 0, "Required atleast sl for learning."
 
     config.device = "cuda" if torch.cuda.is_available() else "cpu"
-    config.checkpoint = os.path.join(config.checkpoint, "{}-{}".format(
-        datetime.datetime.now().strftime('%Y-%m-%d-%H:%M:%S'),
-        config.exp_name))
+    config.checkpoint = os.path.join(
+        config.checkpoint,
+        "{}".format(config.exp_name)
+    )
     config.n_gpu = torch.cuda.device_count()
-    maybe_mkdir(config.checkpoint)
 
+    # Make folder for checkpoint
+    os.makedirs(config.checkpoint, exist_ok=True)
+    # Write config with overloads
     with open(os.path.join(config.checkpoint, 'config'), 'wt') as f:
         pprint.pprint(config, stream=f)
 

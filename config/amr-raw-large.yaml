@@ -34,8 +34,6 @@ split_sent: False
 # dataset
 dataset_type: ['amr'] # ['natural_questions', 'squad', 'drop', 'cardie']
 input_format: 'original' #Optional for amr
-dataset_path: 'DATA/'
-dataset_cache: 'DATA/cache/amr'
 small: False #Only for debug. Train with 50 examples
 
 # AMR Specific

@@ -26,10 +26,9 @@ def tokenize_and_encode(dataset, tokenizer):
 
 # Candidate to be removed
 
-# Split list given a list of breaking elements
-
 
 def split_list(L, S):
+    """Split list given a list of breaking elements"""
     output = list()
     for s in S:
         if s in L:
@@ -151,10 +150,10 @@ def pre_process_amr_datasets_decode(
 def load_amr(args):
 
     dataset_path = args.dataset_path
-    train_file = os.path.join(dataset_path, "train.txt")
-    dev_file = os.path.join( dataset_path, "dev.txt")
-    test_file = os.path.join(dataset_path, "test.txt")
-    silver_train_file = "silver.txt"
+    train_file = os.path.join(dataset_path, "train.amr")
+    dev_file = os.path.join(dataset_path, "dev.amr")
+    test_file = os.path.join(dataset_path, "test.amr")
+    silver_train_file = "silver.amr"
 
     amr = AMRData(
         train_file,
@@ -346,7 +345,7 @@ def preproc_amr(args, tokenizer, encoded_dataset, with_text=True, ):
 
         encoded_dataset = tmp_encoded_dataset
 
-    logger.info(" * Prepear input vectors")
+    logger.info(" * Prepare input vectors")
     for idx, (amr_graph, text) in enumerate(encoded_dataset):
         if idx > args.max_num_examples:
             break

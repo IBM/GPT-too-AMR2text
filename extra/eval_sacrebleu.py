@@ -1,7 +1,34 @@
 import sys
+import argparse
 from typing import Iterable, Optional
 import sacrebleu
 import re
+
+
+def argument_parser():
+
+    parser = argparse.ArgumentParser(description='Preprocess AMR data')
+    # Multiple input parameters
+    parser.add_argument(
+        "--in-tokens",
+        help="input tokens",
+        required=True,
+        type=str
+    )
+    parser.add_argument(
+        "--in-reference-tokens",
+        help="refrence tokens to compute metric",
+        type=str
+    )
+    parser.add_argument(
+        "--out-results",
+        help="tokens from AMR",
+        required=True,
+        type=str
+    )
+    args = parser.parse_args()
+
+    return args
 
 
 def tokenize_sentence(text, debug=False):
@@ -25,11 +52,20 @@ def raw_corpus_chrf(hypotheses: Iterable[str],
                                  beta=sacrebleu.CHRF_BETA,
                                  remove_whitespace=True)
 
+def read_tokens(in_tokens_file):
+    with open(in_tokens_file) as fid:
+        lines = fid.readlines()
+    return lines
+
 
 if __name__ == '__main__':
 
-    ref = open(sys.argv[1]).readlines()
-    hyp = open(sys.argv[2]).readlines()
+    # Argument handlig
+    args = argument_parser()
+
+    # read files
+    ref = read_tokens(args.in_reference_tokens)
+    hyp = read_tokens(args.in_tokens)
 
     # Lower evaluation
     for i in range(len(ref)):
@@ -41,8 +77,16 @@ if __name__ == '__main__':
             hyp[i] = hyp[i].split('<generate>')[-1]
         hyp[i] = tokenize_sentence(hyp[i].lower())
 
-    print(len(hyp), len(ref))
+    # results
+    results = []
+    results.append(f'{len(hyp)} {len(ref)}')
+    bleu = raw_corpus_bleu(hyp, [ref])
+    results.append('BLEU {:.2f}'.format(bleu))
+    chrFpp = raw_corpus_chrf(hyp, ref).score * 100
+    results.append('chrF++ {:.2f}'.format(chrFpp))
 
-    # Run evaluation
-    print("BLEU", round(raw_corpus_bleu(hyp, [ref]), 2))
-    print("chrF++", round(raw_corpus_chrf(hyp, ref)*100, 2))
+    # write results
+    with open(args.out_results, 'w') as fid:
+        for line in results:
+            print(line)
+            fid.write(f'{line}\n')

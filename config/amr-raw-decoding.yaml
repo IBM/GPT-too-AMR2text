@@ -20,7 +20,7 @@ top_k: 0
 top_p: 1.0 # nucleus sampling #top_p: 0.9 # nucleus sampling
 temperature: 1
 max_length: 200
-output_data: 'Test' #Train/Dev
+output_data: 'Dev' #Train/Dev
 
 # misc
 fp16: '' # Set to O0, O1, O2 or O3 for fp16 training
@@ -29,13 +29,10 @@ re_tokenize: False
 traintype: 'train'
 rewardtype: ['ce']
 device: 'cuda'
-checkpoint: './checkpoint'
     
 # dataset
 dataset_type: ['amr'] # ['natural_questions', 'squad', 'drop', 'cardie']
 input_format: 'original' #Optional for amr
-dataset_path: 'DATA/'
-dataset_cache: 'DATA/cache/amr'
 small: False
 use_silver_data: False
 exclude_large: True

@@ -25,16 +25,6 @@ class dotdict(dict):
     __delattr__ = dict.__delitem__
 
 
-def maybe_mkdir(dirpath):
-    """ Create all parent folders if needed. """
-    try:
-        os.makedirs(dirpath)
-    except FileExistsError:
-        pass
-
-    return dirpath
-
-
 def find_sub_list(sl, l):
     "find starting and ending indices of sublist in list"
     sll = len(sl)
@@ -396,9 +386,9 @@ def get_dataset(tokenizer, dataset_path, dataset_cache_dir=None,
             return list(tokenize(o) for o in obj)
         dataset = tokenize(dataset)
         if dataset_cache:
-            maybe_mkdir(dataset_cache_dir)
-            logger.info("Saving tokenized dataset to cache at %s",
-                        dataset_cache)
+            os.makedirs(dataset_cache_dir, exist_ok=True)
+            logger.info(
+                f'Saving tokenized dataset to cache at {dataset_cache}')
             torch.save(dataset, dataset_cache)
 
     return dataset
@@ -458,7 +448,9 @@ def get_datasets(args, tokenizer, with_question=False):
                 # no <eos> string at the end
                 question = []
                 with_eos = False
-            instance_que = build_que_input_from_segments(context, answer, question, tokenizer, max_input_length=args.max_input_length, with_eos=with_eos)
+            instance_que = build_que_input_from_segments(
+                context, answer, question, tokenizer,
+                max_input_length=args.max_input_length, with_eos=with_eos)
             for input_name, input_array in instance_que.items():
                 datasets[input_name].append(input_array)
 
@@ -474,10 +466,10 @@ def get_data_loaders(args, tokenizer, model, dataset_name="Train",
     if 'amr' in args.dataset_type:
         logger.info("The data set is AMR")
 
-        file_name_train = "amr_"+args.input_format+"_train"
-        file_name_dev = "amr_"+args.input_format+"_dev"
-        file_name_test = "amr_"+args.input_format+"_test"
-        file_name_silver = "amr_silver_data.txt"
+        file_name_train = f'amr_{args.input_format}_train'
+        file_name_dev = f'amr_{args.input_format}_dev'
+        file_name_test = f'amr_{args.input_format}_test'
+        file_name_silver = 'amr_silver_data.txt'
 
         dataset_cache_silver = os.path.join(args.dataset_cache,
                                             file_name_silver)
@@ -492,8 +484,9 @@ def get_data_loaders(args, tokenizer, model, dataset_name="Train",
         if dataset_cache and os.path.isfile(dataset_cache) \
                 and not args.re_tokenize:
             logger.info("Loding tokenized AMR from cache")
-            logger.info("Load tokenized dataset from cache at %s",
-                        dataset_cache)
+            logger.info(
+                f'Load tokenized dataset from cache at {dataset_cache}'
+            )
             encoded_dataset_train = torch.load(dataset_cache)
             encoded_dataset_dev = torch.load(dataset_cache_dev)
             encoded_dataset_test = torch.load(dataset_cache_test)
@@ -508,9 +501,9 @@ def get_data_loaders(args, tokenizer, model, dataset_name="Train",
                 encoded_dataset_silver = \
                 tokenize_amr(tokenizer, args, *datasets)
             if dataset_cache:
-                maybe_mkdir(args.dataset_cache)
-                logger.info("Saving tokenized dataset to cache at %s",
-                            dataset_cache)
+                os.makedirs(args.dataset_cache, exist_ok=True)
+                logger.info(
+                    f'Saving tokenized dataset to cache at {dataset_cache}')
                 torch.save(encoded_dataset_train, dataset_cache)
                 torch.save(encoded_dataset_dev, dataset_cache_dev)
                 torch.save(encoded_dataset_test, dataset_cache_test)

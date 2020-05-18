@@ -1,0 +1,18 @@
+channels:
+  - https://public.dhe.ibm.com/ibmdl/export/pub/software/server/ibm-ai/conda
+  - powerai
+  - defaults
+dependencies:
+  - cudatoolkit=10.1.168=533.g8d035fd
+  - pip=19.2.3=py36_0
+  - python=3.6.9=h2bede3c_0
+  - pytorch=1.1.0=py36_18202.gc0fb6ff
+  - sacrebleu
+  - tqdm
+  - requests
+  - spacy
+  - matplotlib=3.1.1=py36h5429711_0
+  - scikit-learn=0.19.1=py36h6cfcb94_0
+  - h5py=2.8.0=py36h8d01980_0
+  - typing=3.6.4=py36_0
+  - scipy

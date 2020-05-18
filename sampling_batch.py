@@ -15,7 +15,8 @@ import torch.nn.functional as F
 from pytorch_transformers import GPT2LMHeadModel, GPT2Tokenizer
 from models import GPT2ConditionalLMHeadModel
 
-from utils import dotdict, maybe_mkdir, top_k_top_p_filtering
+from utils import dotdict
+from top-k-top-p import top_k_top_p_filtering
 from utils import get_data_loaders, trim_batch
 from constants import SPECIAL_TOKENS
 
@@ -112,7 +113,7 @@ def main(args):
                 outputs = outputs.unsqueeze(0).unsqueeze(0)
 
             ###################
-            # Nucleuos Sampling
+            # Nucleous Sampling
             ###################
             elif args.decoder == "sampling":
                 with torch.no_grad():
@@ -241,11 +242,21 @@ def run():
     parser = ArgumentParser()
     parser.add_argument("-c", "--config_path", default='config/config.yaml',
                         help="The default config file.")
-    parser.add_argument("-mq", "--model_path", type=str, required=True,
-                        help='Pretrained model path to local checkpoint \
-                        for Question Generator')
-    parser.add_argument("-e", "--exp_name", type=str, default='qgen',
-                        help='The name of experiment')
+    # obligatory arguments
+    parser.add_argument(
+        "--dataset_path",
+        help="Input data folder",
+        required=True)
+    parser.add_argument(
+        "--dataset_cache",
+        help="Cache for input data folder",
+        required=True)
+    parser.add_argument(
+        "-mq", "--model_path", type=str, required=True,
+        help='Pretrained model path to local checkpoint')
+    parser.add_argument(
+        "-e", "--exp_name", type=str, default='qgen',
+        help='The name of experiment')
     args = parser.parse_args()
 
     # Read config from yaml file.
@@ -254,12 +265,13 @@ def run():
         config = yaml.safe_load(reader)
         config = dotdict(config)
 
+    # overload with command line arguments
     for k, v in vars(args).items():
         config[k] = v
 
     config.checkpoint = os.path.join(config.model_path,
                                      "sampling", config.exp_name)
-    maybe_mkdir(config.checkpoint)
+    os.makedirs(config.checkpoint, exist_ok=True)
     copyfile(config.config_path, os.path.join(config.checkpoint,
                                               "config.yaml"))
 

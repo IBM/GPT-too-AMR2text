@@ -1,72 +1,57 @@
-# AMR2text from Pretrained Transformer
+# AMR2text from Pre-trained Transformer
 
+Code to reproduce 
 
-## Install with pip
+**GPT-too: A Language-Model-First Approach for AMR-to-Text-Generation**
 
-Assuming that you have `Python3` and `virtualenv` available on your command
-line you can use
+training GPT-2 models to attain state-of-the art AMR-to-text generation. 
 
-    bash install_pip.sh
+## Install
 
-This will install the needed modules as well download the `stog` preprocessing
-tools and make the acessible in a virtualenv called `venv`. To activate the
-virtualenv do
+Code was tested for Python 3.6 on Linux machines both for x86 and PowerPC
+architectures.
 
+All scripts source an environment script that can be used to activate virtual
+environments or setup system variables specific to the project. If you do not
+need any of this just set it to an empty file
+
+    touch set_environment.sh
+
+examples of `set_environment.sh` for a pip install with virtual environment
+
+```bash
+[ ! -d venv ] && virtualenv venv
 . venv/bin/activate
-
-## Install with conda in PowerPC
-
-There is also a script for installation PowerPCs available. For this run
-
-    bash install_conda_ppc.sh
-
-the installation will be carried out on a conda environment (name will be shown
-at the end of the install). To activate the environment
-
-    conda activate <environment name>
-
-this assumes `CONDA_PREFIX` is set and pointing to you PowerPC conda
-installation
-
-## Train / Generate
-
-To train a model
-
-```bash
-python train.py --config_path config/amr_raw.yaml
 ```
 
-To sample sentences from a trained model
+and with a conda environment
 
 ```bash
-python sampling_batch.py --config_path config/config-sampling.yaml --model_path [MODEL_PATH]
+eval "$(/path/to/my/ppc64/miniconda3/bin/conda shell.bash hook)"
+[ ! -d cenv_ppc ] && conda create -y -p ./cenv_ppc
+conda activate ./cenv_ppc
 ```
 
-Experimental code for the sentence splitting
+the installers also source `set_environment.sh` and download all the necessary
+modules and tools, available installers
 
 ```bash
-python generate.py --config_path config/config-sampling.yaml --model_path [MODEL_PATH]
+bash scripts/amr2txt/install_x86_with_pip.sh
+bash scripts/amr2txt/install_x86_with_conda.sh
+bash scripts/amr2txt/install_ppc_with_conda.sh
 ```
 
-Relevant model configs are
+Full pip install for x86, conda install for x86 and conda install for Power PC
+respectively. You can also run the commands on those scripts one by one for a
+manual install.
 
-## Training / Decoding configs
+## Run full train and test
 
-- config/amr_raw.yaml
-- config/amr_raw_small.yaml
-- config/amr_raw_large.yaml
+The following script trains a GPT-2 medium version of the AMR2txt system. It
+also selects bes model in dev according to BLEU and runs beam decoding on it.
 
-## Decoding
+```bash
+bash scripts/amr2txt/experiment.sh scripts/amr2txt/configs/acl2020.sh
+```
 
-- config/amr-beam-decode.yaml
-- config/amr-sample-decode.yaml
-- config/amr-raw-decoding.yaml
-
-## Non-autoencoding experiments
-
-- config/amr_raw_masked_decode.yaml
-- config/amr_raw_masked_large.yaml
-- config/amr_raw_masked_small.yaml
-
-# A note on tokenization
-
+a similar config is also available for GPT-2 large

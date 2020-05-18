@@ -176,8 +176,8 @@ class AMRData():
                 out_list += [":"+t, n1.__repr__()]
             except BaseException:
                 return None
-#           If the nodes has attributes, itter through it and add it to the
-#           list
+            # If the nodes has attributes, itter through it and add it to the
+            # list
             if with_attributes:
                 if len(n1.attributes) > 1:
                     for attr in n1.attributes[1:]:
@@ -185,11 +185,11 @@ class AMRData():
                             attr_tmp = str(attr[1])
                         else:
                             attr_tmp = attr[1]
-#                       Attach to final list
+                        # Attach to final list
                         out_list += [":"+attr[0], attr_tmp]
         return out_list
 
-#   Remove not needed symbols
+    # Remove not needed symbols
     def simplify(self, step):
         if step.startswith(":"):
             return step, True
@@ -209,7 +209,7 @@ class AMRData():
 
         train_amr = AMRIO.read(self.train_file)
 
-        for i, amr in enumerate(train_amr):
+        for i, amr in tqdm(enumerate(train_amr), desc='Train AMR'):
             # Raw version
             if self.small and i > 50:
                 break
@@ -305,7 +305,7 @@ class AMRData():
             print("No silver data performed")
 
         dev_amr = AMRIO.read(self.dev_file)
-        for i, amr in enumerate(dev_amr):
+        for i, amr in tqdm(enumerate(dev_amr), desc='Dev AMR'):
             if self.small and i > 50:
                 break
 
@@ -336,7 +336,7 @@ class AMRData():
 
         test_amr = AMRIO.read(self.test_file)
         self.amr_test = test_amr
-        for i, amr in enumerate(test_amr):
+        for i, amr in tqdm(enumerate(test_amr), desc='Test AMR'):
             if self.small and i > 50:
                 break
 
