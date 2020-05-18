@@ -45,13 +45,21 @@ Full pip install for x86, conda install for x86 and conda install for Power PC
 respectively. You can also run the commands on those scripts one by one for a
 manual install.
 
-## Run full train and test
+## Run full train and test on LDC2016T10
+
+You will need to store the LDC2016T10 dataset with following names
+
+```bash
+DATA/train.amr
+DATA/dev.amr
+DATA/test.amr
+```
 
 The following script trains a GPT-2 medium version of the AMR2txt system. It
-also selects bes model in dev according to BLEU and runs beam decoding on it.
+also selects best model in dev according to BLEU and runs beam decoding on it.
 
 ```bash
 bash scripts/amr2txt/experiment.sh scripts/amr2txt/configs/acl2020.sh
 ```
 
-a similar config is also available for GPT-2 large
+a similar config is also available for GPT-2 large. 

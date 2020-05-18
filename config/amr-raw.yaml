@@ -1,7 +1,7 @@
 # training
 batch_size: 1
 max_norm: 3
-n_epochs: 15
+n_epochs: 8
 seed: 42
 learning: ['sl']  # sl - suvervised learning [rl] for reinforcement learning
 
