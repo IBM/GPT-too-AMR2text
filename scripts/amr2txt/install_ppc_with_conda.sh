@@ -54,4 +54,6 @@ cd ..
 tar -xf meteor-1.5.tar.gz
 
 # Download top-k nucleous sampler
-[ ! -f "top-k-top-p.py" ] && wget https://gist.githubusercontent.com/thomwolf/1a5a29f6962089e871b94cbd09daf317/raw/91eea55d0353eaa18f7935e900d5e8d5e503e89c/top-k-top-p.py
+[ ! -f "top_k_top_p.py" ] && \
+    wget -O top_k_top_p.py https://gist.githubusercontent.com/thomwolf/1a5a29f6962089e871b94cbd09daf317/raw/91eea55d0353eaa18f7935e900d5e8d5e503e89c/top-k-top-p.py && \
+    sed '29,$d' -i top_k_top_p.py

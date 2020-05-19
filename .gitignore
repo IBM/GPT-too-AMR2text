@@ -13,7 +13,7 @@ DATA/
 transformers/
 stog
 meteor*
-top-k-top-p.py
+top_k_top_p.py
 
 # logs
 *.stderr

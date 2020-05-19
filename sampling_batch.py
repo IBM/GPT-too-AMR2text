@@ -16,7 +16,7 @@ from pytorch_transformers import GPT2LMHeadModel, GPT2Tokenizer
 from models import GPT2ConditionalLMHeadModel
 
 from utils import dotdict
-from top-k-top-p import top_k_top_p_filtering
+from top_k_top_p import top_k_top_p_filtering
 from utils import get_data_loaders, trim_batch
 from constants import SPECIAL_TOKENS
 
