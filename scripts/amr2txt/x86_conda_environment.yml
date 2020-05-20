@@ -1,0 +1,24 @@
+channels:
+  - default  
+  - powerai
+  - pytorch
+dependencies:
+  - cudatoolkit
+  - pip
+  - python=3.6.9
+  - pytorch=1.1.0
+  - sacrebleu
+  - tqdm
+  - requests
+  - spacy
+  - matplotlib=3.1.1
+  - scikit-learn=0.19.1
+  - h5py=2.8.0
+  - typing=3.6.4
+  - typing-extensions 
+  - nltk=3.4.5
+  - numpy=1.15.1
+  - tqdm=4.26.0
+  - ignite=0.2.0
+  - PyYAML=5.1.2
+  - scipy

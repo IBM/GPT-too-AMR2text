@@ -1,0 +1,5 @@
+nltk==3.4.5
+numpy==1.15.1
+pytorch-ignite==0.2.0
+PyYAML==5.1.2
+typing-extensions>=3.6.2.1
