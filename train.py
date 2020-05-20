@@ -208,6 +208,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     logger.info("Arguments: %s", pprint.pformat(config))
     logger.info("device: {}, n_gpu {}".format(config.device, config.n_gpu))
+
     random.seed(config.seed)
     torch.random.manual_seed(config.seed)
     torch.cuda.manual_seed(config.seed)
