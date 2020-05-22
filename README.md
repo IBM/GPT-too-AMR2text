@@ -2,7 +2,7 @@
 
 Code to reproduce 
 
-**GPT-too: A Language-Model-First Approach for AMR-to-Text-Generation**
+ [**GPT-too: A Language-Model-First Approach for AMR-to-Text-Generation**](https://arxiv.org/abs/2005.09123)
 
 training GPT-2 models to attain state-of-the art AMR-to-text generation. 
 
@@ -63,3 +63,19 @@ bash scripts/amr2txt/experiment.sh scripts/amr2txt/configs/acl2020.sh
 ```
 
 a similar config is also available for GPT-2 large. 
+
+## Citation
+
+If you use the source code or want to refere to our findings, please consider citing the follow paper:
+
+```
+@inproceedings{mager-etal-2020-gpt-too,
+    title = "GPT-too: A language-model-first approach for AMR-to-text generation",
+    author = "Manuel, Mager and Ram\'on, Fernandez Astudillo and Tahira, Naseem and Md Arafat, Sultan and Young-Suk, Lee and Radu, Florian and Salim, Roukos",
+    booktitle = "Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics",
+    month = jul,
+    year = "2020",
+    address = "Seattle, USA",
+    publisher = "Association for Computational Linguistics",
+}
+```
