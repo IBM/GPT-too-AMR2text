@@ -5,4 +5,4 @@ allennlp==0.8.5
 pytorch-ignite==0.2.0
 pytorch_transformers==1.1.0
 torch==1.1.0
-PyYAML==5.1.2
+PyYAML==5.4
