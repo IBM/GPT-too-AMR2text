@@ -1,5 +1,5 @@
 nltk==3.4.5
-numpy==1.15.1
+numpy==1.22.0
 tqdm==4.26.0
 allennlp==0.8.5
 pytorch-ignite==0.2.0
